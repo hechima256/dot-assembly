@@ -14,5 +14,9 @@ const PixelArtSchema = new mongoose.Schema(
 );
 
 // 既に定義されているか確認し、定義されていない場合にのみモデルを作成
-export const PixelArt =
-	mongoose.models.PixelArt || mongoose.model("PixelArt", PixelArtSchema);
+function getModel() {
+	return mongoose.model("PixelArt", PixelArtSchema);
+}
+export const PixelArt = (mongoose.models.PixelArt || getModel()) as ReturnType<
+	typeof getModel
+>;
