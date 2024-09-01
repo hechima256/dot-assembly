@@ -1,17 +1,18 @@
 import mongoose from "mongoose";
 
-// PixelArtSchemaは1ピクセルのドット絵を管理します。
 const PixelArtSchema = new mongoose.Schema(
 	{
-		color: { type: String, required: true }, // 現在の色コード（例: "#FF5733"）
+		color: { type: String, required: true },
 		colorHistory: [
 			{
-				color: { type: String, required: true }, // 色コード（例: "#FF5733"）
-				timestamp: { type: Date, required: true }, // 色が変更された日時
+				color: { type: String, required: true },
+				timestamp: { type: Date, required: true },
 			},
 		],
 	},
 	{ timestamps: true },
 );
 
-export const PixelArt = mongoose.model("PixelArt", PixelArtSchema);
+// 既に定義されているか確認し、定義されていない場合にのみモデルを作成
+export const PixelArt =
+	mongoose.models.PixelArt || mongoose.model("PixelArt", PixelArtSchema);
