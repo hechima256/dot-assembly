@@ -10,31 +10,27 @@ export default async function Home() {
 		const pixelArt = await PixelArt.findOne().lean();
 
 		if (!pixelArt) {
-			return <div>No Pixel Art found</div>;
+			return (
+				<div className="text-center text-red-500">
+					No Pixel Art found
+				</div>
+			);
 		}
 
 		return (
-			<div>
-				<h1>Current Pixel Art</h1>
+			<div className="p-4">
+				<h1 className="text-2xl font-bold mb-4">Current Pixel Art</h1>
 				<div
-					style={{
-						width: "100px",
-						height: "100px",
-						backgroundColor: pixelArt.color, // 最新の色を背景色として使用
-					}}
+					className="w-24 h-24"
+					style={{ backgroundColor: pixelArt.color }} // Tailwindでは直接スタイルを設定
 				/>
-				<h2>Color History</h2>
-				<ul>
+				<h2 className="text-xl font-semibold mt-4">Color History</h2>
+				<ul className="mt-2 space-y-2">
 					{pixelArt.colorHistory.map((entry, index) => (
-						<li key={index}>
+						<li key={index} className="flex items-center">
 							<span
-								style={{
-									display: "inline-block",
-									width: "20px",
-									height: "20px",
-									backgroundColor: entry.color,
-									marginRight: "10px",
-								}}
+								className="block w-5 h-5 mr-2"
+								style={{ backgroundColor: entry.color }} // Tailwindでは直接スタイルを設定
 							/>
 							{new Date(entry.timestamp).toLocaleString()}
 						</li>
@@ -44,6 +40,10 @@ export default async function Home() {
 		);
 	} catch (error) {
 		console.error("Error fetching pixel art:", error);
-		return <div>Failed to load Pixel Art</div>;
+		return (
+			<div className="text-center text-red-500">
+				Failed to load Pixel Art
+			</div>
+		);
 	}
 }
