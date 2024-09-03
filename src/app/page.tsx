@@ -16,26 +16,15 @@ export default async function Home() {
 				</div>
 			);
 		}
-
+		const lastColor = pixelArt.colorHistory[0];
 		return (
-			<div className="p-4">
-				<h1 className="text-2xl font-bold mb-4">Current Pixel Art</h1>
-				<div
-					className="w-24 h-24"
-					style={{ backgroundColor: pixelArt.color }} // Tailwindでは直接スタイルを設定
-				/>
-				<h2 className="text-xl font-semibold mt-4">Color History</h2>
-				<ul className="mt-2 space-y-2">
-					{pixelArt.colorHistory.map((entry, index) => (
-						<li key={index} className="flex items-center">
-							<span
-								className="block w-5 h-5 mr-2"
-								style={{ backgroundColor: entry.color }} // Tailwindでは直接スタイルを設定
-							/>
-							{new Date(entry.timestamp).toLocaleString()}
-						</li>
-					))}
-				</ul>
+			<div
+				className="w-screen h-screen flex items-center justify-center"
+				style={{ backgroundColor: pixelArt.color }} // Tailwindでは直接スタイルを設定
+			>
+				<p className="text-4xl">
+					{new Date(lastColor.timestamp).toLocaleDateString()}
+				</p>
 			</div>
 		);
 	} catch (error) {
