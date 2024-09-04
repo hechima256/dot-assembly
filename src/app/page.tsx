@@ -1,3 +1,4 @@
+import Canvas from "@/features/routes/pixel_art/canvas";
 import { PixelArt } from "@/models/PixelArt";
 import connectDB from "@/utils/mongodb";
 
@@ -12,26 +13,24 @@ export default async function Home() {
 		if (!pixelArt) {
 			return (
 				<div className="text-center text-red-500">
-					No Pixel Art found
+					絵が見つかりません。
 				</div>
 			);
 		}
-		const lastColor = pixelArt.colorHistory[0];
-		return (
-			<div
-				className="w-screen h-screen flex items-center justify-center"
-				style={{ backgroundColor: pixelArt.color }} // Tailwindでは直接スタイルを設定
-			>
-				<p className="text-4xl">
-					{new Date(lastColor.timestamp).toLocaleDateString()}
-				</p>
+		const len = pixelArt.colorHistory.length;
+		const lastColor = len > 0 ? pixelArt.colorHistory[len - 1] : null;
+		return lastColor == null ? (
+			<div>
+				<p>履歴がありません。</p>
 			</div>
+		) : (
+			<Canvas colorHistory={lastColor} />
 		);
 	} catch (error) {
 		console.error("Error fetching pixel art:", error);
 		return (
 			<div className="text-center text-red-500">
-				Failed to load Pixel Art
+				絵の取得に失敗しました。
 			</div>
 		);
 	}
