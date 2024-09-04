@@ -1,3 +1,4 @@
+import Canvas from "@/features/routes/pixel_art/canvas";
 import { PixelArt } from "@/models/PixelArt";
 import connectDB from "@/utils/mongodb";
 
@@ -10,40 +11,27 @@ export default async function Home() {
 		const pixelArt = await PixelArt.findOne().lean();
 
 		if (!pixelArt) {
-			return <div>No Pixel Art found</div>;
+			return (
+				<div className="text-center text-red-500">
+					絵が見つかりません。
+				</div>
+			);
 		}
-
-		return (
+		const len = pixelArt.colorHistory.length;
+		const lastColor = len > 0 ? pixelArt.colorHistory[len - 1] : null;
+		return lastColor == null ? (
 			<div>
-				<h1>Current Pixel Art</h1>
-				<div
-					style={{
-						width: "100px",
-						height: "100px",
-						backgroundColor: pixelArt.color, // 最新の色を背景色として使用
-					}}
-				/>
-				<h2>Color History</h2>
-				<ul>
-					{pixelArt.colorHistory.map((entry, index) => (
-						<li key={index}>
-							<span
-								style={{
-									display: "inline-block",
-									width: "20px",
-									height: "20px",
-									backgroundColor: entry.color,
-									marginRight: "10px",
-								}}
-							/>
-							{new Date(entry.timestamp).toLocaleString()}
-						</li>
-					))}
-				</ul>
+				<p>履歴がありません。</p>
 			</div>
+		) : (
+			<Canvas colorHistory={lastColor} />
 		);
 	} catch (error) {
 		console.error("Error fetching pixel art:", error);
-		return <div>Failed to load Pixel Art</div>;
+		return (
+			<div className="text-center text-red-500">
+				絵の取得に失敗しました。
+			</div>
+		);
 	}
 }
