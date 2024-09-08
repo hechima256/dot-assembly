@@ -1,11 +1,7 @@
 "use client";
 
+import { ColorHistoryProps } from "./art-area";
 import { useState } from "react";
-
-export type ColorHistoryProps = {
-	color: string;
-	timestamp: Date;
-};
 
 export default function Canvas({
 	colorHistory,
