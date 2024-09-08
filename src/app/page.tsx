@@ -1,4 +1,4 @@
-import Canvas from "@/features/routes/pixel_art/canvas";
+import ArtArea from "@/features/routes/pixel_art/art-area";
 import { PixelArt } from "@/models/PixelArt";
 import connectDB from "@/utils/mongodb";
 
@@ -24,7 +24,7 @@ export default async function Home() {
 				<p>履歴がありません。</p>
 			</div>
 		) : (
-			<Canvas colorHistory={lastColor} />
+			<ArtArea colorHistory={lastColor} />
 		);
 	} catch (error) {
 		console.error("Error fetching pixel art:", error);
