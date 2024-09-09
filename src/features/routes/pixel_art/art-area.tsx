@@ -12,7 +12,7 @@ export default function ArtArea({
 	latestColor: ColorTimestampProps;
 }) {
 	return (
-		<div>
+		<div className="w-screen h-screen">
 			<Canvas latestColor={latestColor} />
 			<FloatingMenu />
 		</div>
