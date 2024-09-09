@@ -1,19 +1,19 @@
 import Canvas from "./canvas";
 import FloatingMenu from "./floating-menu";
 
-export type ColorHistoryProps = {
+export type ColorTimestampProps = {
 	color: string;
 	timestamp: Date;
 };
 
 export default function ArtArea({
-	colorHistory,
+	latestColor,
 }: {
-	colorHistory: ColorHistoryProps;
+	latestColor: ColorTimestampProps;
 }) {
 	return (
 		<div>
-			<Canvas colorHistory={colorHistory} />
+			<Canvas latestColor={latestColor} />
 			<FloatingMenu />
 		</div>
 	);
