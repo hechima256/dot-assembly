@@ -22,6 +22,7 @@ enum Color {
 
 export default function FloatingMenu() {
 	const [mode, setMode] = useState<"view" | "draw">("view"); // Track the current mode
+	const [selectedColor, setSelectedColor] = useState<Color>(Color.White);
 
 	const handleModeChange = (newMode: "view" | "draw") => {
 		setMode(newMode);
@@ -35,6 +36,9 @@ export default function FloatingMenu() {
 				<div className="w-10 h-10 bg-green-500 rounded-full cursor-pointer"></div>
 				<div className="w-10 h-10 bg-yellow-500 rounded-full cursor-pointer"></div>
 			</div>
+	const handleColorChange = (newColor: Color) => {
+		setSelectedColor(newColor);
+	};
 
 			{/* Display current mode */}
 			<div className="text-lg">
