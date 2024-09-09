@@ -28,36 +28,44 @@ export default function FloatingMenu() {
 		setMode(newMode);
 	};
 
-	return (
-		<div className="absolute bottom-0 w-full bg-gray-800 text-white p-4 flex items-center justify-between">
-			<div className="flex space-x-4">
-				{/* Color Palette (Example colors based on image) */}
-				<div className="w-10 h-10 bg-red-500 rounded-full cursor-pointer"></div>
-				<div className="w-10 h-10 bg-green-500 rounded-full cursor-pointer"></div>
-				<div className="w-10 h-10 bg-yellow-500 rounded-full cursor-pointer"></div>
-			</div>
 	const handleColorChange = (newColor: Color) => {
 		setSelectedColor(newColor);
 	};
 
-			{/* Display current mode */}
-			<div className="text-lg">
-				{mode === "view" ? "Viewing Mode" : "Drawing Mode"}
+	return (
+		<div className="h-20 absolute bottom-0 w-full bg-gray-800 text-white flex items-center justify-between py-4">
+			<div className="mx-2 flex space-x-2 overflow-x-scroll items-center">
+				{Object.values(Color).map((color) => (
+					<div
+						key={color}
+						className={`flex-shrink-0 size-10 rounded-xl cursor-pointer relative transition-all ${
+							color === selectedColor ? "size-12" : ""
+						}`}
+						style={{ backgroundColor: color }}
+						onClick={() => {
+							handleColorChange(color);
+						}}
+					/>
+				))}
 			</div>
 
 			{/* Mode Switch Buttons */}
-			<div>
+			<div className="mr-2 flex justify-center">
 				<button
-					className={`px-4 py-2 mx-2 rounded-lg ${mode === "view" ? "bg-blue-500" : "bg-gray-500"}`}
+					className={`px-4 py-2 rounded-lg text-sm md:text-base ${
+						mode === "view" ? "bg-blue-500" : "bg-gray-500"
+					} w-auto`}
 					onClick={() => handleModeChange("view")}
 				>
-					View Mode
+					View
 				</button>
 				<button
-					className={`px-4 py-2 mx-2 rounded-lg ${mode === "draw" ? "bg-blue-500" : "bg-gray-500"}`}
+					className={`ml-1 px-4 py-2 rounded-lg text-sm md:text-base ${
+						mode === "draw" ? "bg-blue-500" : "bg-gray-500"
+					} w-auto`}
 					onClick={() => handleModeChange("draw")}
 				>
-					Draw Mode
+					Draw
 				</button>
 			</div>
 		</div>
