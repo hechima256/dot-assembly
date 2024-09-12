@@ -24,7 +24,7 @@ export default async function Home() {
 				<p>履歴がありません。</p>
 			</div>
 		) : (
-			<ArtArea latestColor={lastColor} />
+			<ArtArea latestColorInfo={lastColor} />
 		);
 	} catch (error) {
 		console.error("Error fetching pixel art:", error);

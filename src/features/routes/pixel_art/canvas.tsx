@@ -1,30 +1,48 @@
-"use client";
-
-import { ColorTimestampProps } from "./art-area";
+import { Color, ColorTimestamp, Mode } from "./art-area";
 import { useState } from "react";
 
-export default function Canvas({
-	latestColor,
-}: {
-	latestColor: ColorTimestampProps;
-}) {
-	const [showHistory, setShowHistory] = useState<Boolean>(false);
+type ComponentProps = {
+	latestColorInfo: ColorTimestamp;
+	mode: Mode;
+	selectedColor: Color;
+};
 
+export default function Canvas({
+	latestColorInfo,
+	mode,
+	selectedColor,
+}: ComponentProps) {
+	const [showHistory, setShowHistory] = useState<Boolean>(false);
+	const [currentColorInfo, setCurrentColorInfo] =
+		useState<ColorTimestamp>(latestColorInfo);
 	const toggleHistory = () => {
 		setShowHistory(!showHistory);
+	};
+	const paintColor = (color: Color) => {
+		if (color === currentColorInfo.color) return;
+		const now = new Date();
+		setCurrentColorInfo({ color: color, timestamp: now });
 	};
 
 	return (
 		<div
 			className="w-screen h-screen flex items-center justify-center"
-			style={{ backgroundColor: latestColor.color }} // Tailwindでは直接スタイルを設定
-			onClick={toggleHistory}
+			style={{ backgroundColor: currentColorInfo.color }} // Tailwindでは直接スタイルを設定
+			onClick={() => {
+				if (mode === "draw") {
+					paintColor(selectedColor);
+				} else if (mode === "view") {
+					toggleHistory();
+				} else {
+					console.error("Wrong mode.");
+				}
+			}}
 		>
-			{showHistory && (
+			{showHistory && mode === "view" && (
 				<div>
 					<h2 className="text-xl">最終更新</h2>
 					<p className="text-4xl">
-						{new Date(latestColor.timestamp).toLocaleString()}
+						{new Date(currentColorInfo.timestamp).toLocaleString()}
 					</p>
 				</div>
 			)}
