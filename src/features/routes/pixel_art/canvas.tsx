@@ -12,12 +12,9 @@ export default function Canvas({
 	mode,
 	selectedColor,
 }: ComponentProps) {
-	const [showHistory, setShowHistory] = useState<Boolean>(false);
 	const [currentColorInfo, setCurrentColorInfo] =
 		useState<ColorTimestamp>(latestColorInfo);
-	const toggleHistory = () => {
-		setShowHistory(!showHistory);
-	};
+
 	const paintColor = (color: Color) => {
 		if (color === currentColorInfo.color) return;
 		const now = new Date();
@@ -32,13 +29,13 @@ export default function Canvas({
 				if (mode === "draw") {
 					paintColor(selectedColor);
 				} else if (mode === "view") {
-					toggleHistory();
+					// 何もしない
 				} else {
 					console.error("Wrong mode.");
 				}
 			}}
 		>
-			{showHistory && mode === "view" && (
+			{mode === "view" && (
 				<div>
 					<h2 className="text-xl">最終更新</h2>
 					<p className="text-4xl">
