@@ -23,36 +23,39 @@ export default function FloatingMenu({
 	};
 
 	return (
-		<div className="h-20 absolute bottom-0 w-full bg-gray-800 text-white flex items-center justify-between py-4">
-			<div className="mx-2 flex space-x-2 overflow-x-scroll items-center">
+		<div className="h-14 absolute bottom-4 left-1/2 transform -translate-x-1/2 w-full flex items-center justify-center space-x-3 px-1 sm:px-3">
+			{/* カラーピッカー */}
+			<div className="h-full flex space-x-2 overflow-x-scroll items-center rounded-3xl bg-white bg-opacity-40 px-2 shadow-lg">
 				{Object.values(Colors).map((color) => (
 					<div
 						key={color}
-						className={`flex-shrink-0 size-10 rounded-xl cursor-pointer relative transition-all ${
-							color === selectedColor ? "size-12" : ""
+						className={`flex-shrink-0 w-10 h-10 rounded-full cursor-pointer transition-all ${
+							color === selectedColor ? "w-12 h-12" : ""
 						}`}
 						style={{ backgroundColor: color }}
-						onClick={() => {
-							handleColorChange(color);
-						}}
+						onClick={() => handleColorChange(color)}
 					/>
 				))}
 			</div>
 
-			{/* Mode Switch Buttons */}
-			<div className="mr-2 flex justify-center">
+			{/* モード切り替えボタン */}
+			<div className="h-full flex items-center space-x-1 text-white bg-white bg-opacity-40 px-2 rounded-2xl shadow-lg">
 				<button
-					className={`px-4 py-2 rounded-lg text-sm md:text-base ${
-						mode === "view" ? "bg-blue-500" : "bg-gray-500"
-					} w-auto`}
+					className={`h-10 px-3 py-2 rounded-xl text-sm ${
+						mode === "view"
+							? "bg-blue-500"
+							: "bg-gray-200 text-black"
+					}`}
 					onClick={() => handleModeChange("view")}
 				>
 					View
 				</button>
 				<button
-					className={`ml-1 px-4 py-2 rounded-lg text-sm md:text-base ${
-						mode === "draw" ? "bg-blue-500" : "bg-gray-500"
-					} w-auto`}
+					className={`h-10 px-3 py-2 rounded-xl text-sm ${
+						mode === "draw"
+							? "bg-blue-500"
+							: "bg-gray-200 text-black"
+					}`}
 					onClick={() => handleModeChange("draw")}
 				>
 					Draw
