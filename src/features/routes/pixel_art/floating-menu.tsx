@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Colors } from "@/constants/colors";
 import { Color, Mode } from "./art-area";
 
