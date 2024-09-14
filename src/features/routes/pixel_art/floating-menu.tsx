@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Color } from "./art-area";
-import { Mode } from "./art-area";
+import { Colors } from "@/constants/colors";
+import { Color, Mode } from "./art-area";
 
 type ComponentProps = {
 	mode: Mode;
@@ -26,7 +26,7 @@ export default function FloatingMenu({
 	return (
 		<div className="h-20 absolute bottom-0 w-full bg-gray-800 text-white flex items-center justify-between py-4">
 			<div className="mx-2 flex space-x-2 overflow-x-scroll items-center">
-				{Object.values(Color).map((color) => (
+				{Object.values(Colors).map((color) => (
 					<div
 						key={color}
 						className={`flex-shrink-0 size-10 rounded-xl cursor-pointer relative transition-all ${
