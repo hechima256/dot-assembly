@@ -1,5 +1,6 @@
 import { Color, ColorTimestamp, Mode } from "./art-area";
 import { useState } from "react";
+import { pushColorDB } from "@/utils/updatedb";
 
 type ComponentProps = {
 	latestColorInfo: ColorTimestamp;
@@ -15,10 +16,16 @@ export default function Canvas({
 	const [currentColorInfo, setCurrentColorInfo] =
 		useState<ColorTimestamp>(latestColorInfo);
 
-	const paintColor = (color: Color) => {
+	const paintColor = async (color: Color) => {
 		if (color === currentColorInfo.color) return;
-		const now = new Date();
-		setCurrentColorInfo({ color: color, timestamp: now });
+		const prevColorInfo = currentColorInfo;
+		setCurrentColorInfo({ color: color, timestamp: new Date() });
+		try {
+			await pushColorDB(color);
+		} catch (error) {
+			setCurrentColorInfo(prevColorInfo);
+			console.error("更新に失敗しました。", error);
+		}
 	};
 
 	return (
