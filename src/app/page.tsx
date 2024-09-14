@@ -19,6 +19,8 @@ export default async function Home() {
 		}
 		const len = pixelArt.colorHistory.length;
 		const lastColor = len > 0 ? pixelArt.colorHistory[len - 1] : null;
+		delete lastColor?._id; // propsに渡すために除外
+
 		return lastColor == null ? (
 			<div>
 				<p>履歴がありません。</p>
