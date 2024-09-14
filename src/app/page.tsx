@@ -1,4 +1,4 @@
-import Canvas from "@/features/routes/pixel_art/canvas";
+import ArtArea from "@/features/routes/pixel_art/art-area";
 import { PixelArt } from "@/models/PixelArt";
 import connectDB from "@/utils/mongodb";
 
@@ -19,12 +19,14 @@ export default async function Home() {
 		}
 		const len = pixelArt.colorHistory.length;
 		const lastColor = len > 0 ? pixelArt.colorHistory[len - 1] : null;
+		delete lastColor?._id; // propsに渡すために除外
+
 		return lastColor == null ? (
 			<div>
 				<p>履歴がありません。</p>
 			</div>
 		) : (
-			<Canvas colorHistory={lastColor} />
+			<ArtArea latestColorInfo={lastColor} />
 		);
 	} catch (error) {
 		console.error("Error fetching pixel art:", error);
