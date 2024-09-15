@@ -2,7 +2,7 @@ import ArtArea from "@/features/routes/pixel_art/art-area";
 import { PixelArt } from "@/models/PixelArt";
 import connectDB from "@/utils/mongodb";
 
-// サーバーコンポーネントでデータを取得
+export const dynamic = "force-dynamic";
 export default async function Home() {
 	try {
 		await connectDB(); // MongoDBに接続
