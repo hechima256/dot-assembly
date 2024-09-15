@@ -3,6 +3,7 @@
 import { Color } from "@/features/routes/pixel_art/art-area";
 import { PixelArt } from "@/models/PixelArt";
 import { Colors } from "@/constants/colors";
+import connectDB from "./mongodb";
 
 export const pushColorDB = async (color: Color) => {
 	try {
@@ -10,7 +11,7 @@ export const pushColorDB = async (color: Color) => {
 			// 色が選択肢の中から選ばれているかのバリデーション
 			throw new Error("Invalid color");
 		}
-
+		await connectDB();
 		const pixelArt = await PixelArt.findOne();
 		if (!pixelArt) throw new Error("PixelArt not found");
 
