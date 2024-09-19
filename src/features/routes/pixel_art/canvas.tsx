@@ -3,22 +3,24 @@ import { pushColorDB } from "@/utils/updatedb";
 import { Color, ColorTimestamp, Mode } from "@/app/page";
 
 type ComponentProps = {
-	latestColorInfo: ColorTimestamp | null;
 	mode: Mode;
 	selectedColor: Color;
 };
 
-export default function Canvas({
-	latestColorInfo,
-	mode,
-	selectedColor,
-}: ComponentProps) {
+export default function Canvas({ mode, selectedColor }: ComponentProps) {
 	const [currentColorInfo, setCurrentColorInfo] =
-		useState<ColorTimestamp | null>(latestColorInfo);
+		useState<ColorTimestamp | null>(null);
 
 	useEffect(() => {
-		setCurrentColorInfo(latestColorInfo);
-	}, [latestColorInfo]);
+		const fetchArtData = async () => {
+			const response = await fetch("/api/pixelart");
+			const resdata = await response.json();
+			setCurrentColorInfo(resdata.data);
+			console.log(resdata);
+		};
+
+		fetchArtData();
+	}, []);
 
 	const paintColor = async (color: Color) => {
 		if (color === currentColorInfo?.color) return;
