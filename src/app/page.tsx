@@ -1,39 +1,49 @@
-import ArtArea from "@/features/routes/pixel_art/art-area";
+"use client";
+import { Colors } from "@/constants/colors";
+import Canvas from "@/features/routes/pixel_art/canvas";
+import FloatingMenu from "@/features/routes/pixel_art/floating-menu";
 import { PixelArt } from "@/models/PixelArt";
 import connectDB from "@/utils/mongodb";
+import { useEffect, useState } from "react";
+export type Color = (typeof Colors)[keyof typeof Colors];
 
-export const dynamic = "force-dynamic";
-export default async function Home() {
-	try {
-		await connectDB(); // MongoDBに接続
+export type ColorTimestamp = {
+	color: string;
+	timestamp: Date;
+};
+export type Mode = "view" | "draw";
 
-		// 最新のPixelArtドキュメントを1つ取得
-		const pixelArt = await PixelArt.findOne().lean();
+export default function ArtArea() {
+	const [mode, setMode] = useState<Mode>("view"); // Track the current mode
+	const [selectedColor, setSelectedColor] = useState<Color>(Colors.Red);
+	const [latestColorInfo, setLatestColorInfo] =
+		useState<ColorTimestamp | null>(null);
 
-		if (!pixelArt) {
-			return (
-				<div className="text-center text-red-500">
-					絵が見つかりません。
-				</div>
-			);
-		}
-		const len = pixelArt.colorHistory.length;
-		const lastColor = len > 0 ? pixelArt.colorHistory[len - 1] : null;
-		delete lastColor?._id; // propsに渡すために除外
+	useEffect(() => {
+		const fetchArtData = async () => {
+			const response = await fetch("/api/pixelart");
+			const resdata = await response.json();
+			setLatestColorInfo(resdata.data);
+			console.log(resdata);
+		};
 
-		return lastColor == null ? (
-			<div>
-				<p>履歴がありません。</p>
-			</div>
-		) : (
-			<ArtArea latestColorInfo={lastColor} />
-		);
-	} catch (error) {
-		console.error("Error fetching pixel art:", error);
-		return (
-			<div className="text-center text-red-500">
-				絵の取得に失敗しました。
-			</div>
-		);
-	}
+		fetchArtData();
+	}, []);
+
+	return (
+		<div className="w-screen h-screen">
+			<Canvas
+				latestColorInfo={latestColorInfo}
+				mode={mode}
+				selectedColor={selectedColor}
+			/>
+
+			<FloatingMenu
+				mode={mode}
+				setMode={setMode}
+				selectedColor={selectedColor}
+				setSelectedColor={setSelectedColor}
+			/>
+		</div>
+	);
 }

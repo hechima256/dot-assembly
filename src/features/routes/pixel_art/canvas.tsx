@@ -1,9 +1,9 @@
-import { Color, ColorTimestamp, Mode } from "./art-area";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pushColorDB } from "@/utils/updatedb";
+import { Color, ColorTimestamp, Mode } from "@/app/page";
 
 type ComponentProps = {
-	latestColorInfo: ColorTimestamp;
+	latestColorInfo: ColorTimestamp | null;
 	mode: Mode;
 	selectedColor: Color;
 };
@@ -14,10 +14,14 @@ export default function Canvas({
 	selectedColor,
 }: ComponentProps) {
 	const [currentColorInfo, setCurrentColorInfo] =
-		useState<ColorTimestamp>(latestColorInfo);
+		useState<ColorTimestamp | null>(latestColorInfo);
+
+	useEffect(() => {
+		setCurrentColorInfo(latestColorInfo);
+	}, [latestColorInfo]);
 
 	const paintColor = async (color: Color) => {
-		if (color === currentColorInfo.color) return;
+		if (color === currentColorInfo?.color) return;
 		const prevColorInfo = currentColorInfo;
 		setCurrentColorInfo({ color: color, timestamp: new Date() });
 		try {
@@ -28,31 +32,42 @@ export default function Canvas({
 		}
 	};
 
-	return (
-		<div
-			className="w-screen h-screen flex items-center justify-center"
-			style={{ backgroundColor: currentColorInfo.color }} // Tailwindでは直接スタイルを設定
-			onClick={() => {
-				if (mode === "draw") {
-					paintColor(selectedColor);
-				} else if (mode === "view") {
-					// 何もしない
-				} else {
-					console.error("Wrong mode.");
-				}
-			}}
-		>
-			{mode === "view" && (
+	if (currentColorInfo) {
+		return (
+			<div
+				className="w-screen h-screen flex items-center justify-center"
+				style={{ backgroundColor: currentColorInfo?.color }} // Tailwindでは直接スタイルを設定
+				onClick={() => {
+					if (mode === "draw") {
+						paintColor(selectedColor);
+					} else if (mode === "view") {
+						// 何もしない
+					} else {
+						console.error("Wrong mode.");
+					}
+				}}
+			>
+				{mode === "view" && (
+					<div>
+						<h2 className="text-xl">最終更新</h2>
+						<p className="text-4xl">
+							{new Date(
+								currentColorInfo.timestamp,
+							).toLocaleString("ja-JP", {
+								timeZone: "Asia/Tokyo",
+							})}
+						</p>
+					</div>
+				)}
+			</div>
+		);
+	} else {
+		return (
+			<div className="w-screen h-screen flex items-center justify-center bg-gray-300">
 				<div>
-					<h2 className="text-xl">最終更新</h2>
-					<p className="text-4xl">
-						{new Date(currentColorInfo.timestamp).toLocaleString(
-							"ja-JP",
-							{ timeZone: "Asia/Tokyo" },
-						)}
-					</p>
+					<p className="text-4xl">Loading...</p>
 				</div>
-			)}
-		</div>
-	);
+			</div>
+		);
+	}
 }
