@@ -1,9 +1,9 @@
 "use server";
 
-import { Color } from "@/features/routes/pixel_art/art-area";
 import { PixelArt } from "@/models/PixelArt";
 import { Colors } from "@/constants/colors";
 import connectDB from "./mongodb";
+import { Color } from "@/app/page";
 
 export const pushColorDB = async (color: Color) => {
 	try {
