@@ -1,5 +1,5 @@
+import { Color, Mode } from "@/app/page";
 import { Colors } from "@/constants/colors";
-import { Color, Mode } from "./art-area";
 
 type ComponentProps = {
 	mode: Mode;
