@@ -10,13 +10,17 @@ type ComponentProps = {
 export default function Canvas({ mode, selectedColor }: ComponentProps) {
 	const [currentColorInfo, setCurrentColorInfo] =
 		useState<ColorTimestamp | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchArtData = async () => {
 			const response = await fetch("/api/pixelart");
-			const resdata = await response.json();
-			setCurrentColorInfo(resdata.data);
-			console.log(resdata);
+			const resjson = await response.json();
+			if (!response.ok) {
+				setError(resjson.message);
+				return;
+			}
+			setCurrentColorInfo(resjson.latestColorInfo);
 		};
 
 		fetchArtData();
@@ -34,6 +38,15 @@ export default function Canvas({ mode, selectedColor }: ComponentProps) {
 		}
 	};
 
+	if (error) {
+		return (
+			<div className="w-screen h-screen flex items-center justify-center">
+				<div>
+					<p className="text-4xl text-red-600">エラー: {error}</p>
+				</div>
+			</div>
+		);
+	}
 	if (currentColorInfo) {
 		return (
 			<div
@@ -65,7 +78,7 @@ export default function Canvas({ mode, selectedColor }: ComponentProps) {
 		);
 	} else {
 		return (
-			<div className="w-screen h-screen flex items-center justify-center bg-gray-300">
+			<div className="w-screen h-screen flex items-center justify-center">
 				<div>
 					<p className="text-4xl">Loading...</p>
 				</div>
