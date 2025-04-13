@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Dot Assembly 🎨
 
-## Getting Started
+共同でピクセルアートを作成できるWebアプリケーション。Redditのr/placeのような共同アート体験を目指しています。
+**現状は画面全体を1つのピクセルとして扱う実装となっています。**
 
-First, run the development server:
+## 🚀 デモ
+
+現在のバージョン: https://dot-assembly.vercel.app/
+
+## 🌟 特徴
+
+-   画面全体を1つのピクセルとして編集可能
+-   最終更新日時の表示
+-   シンプルなUI
+
+## 🛠 技術スタック
+
+-   **フレームワーク**: Next.js 14 (App Router)
+    -   Route Handlers（APIエンドポイント）
+    -   クライアントコンポーネント（インタラクティブなUI要素）
+-   **データベース**: MongoDB
+-   **その他**: TypeScript, Tailwind CSS
+
+## 💻 開発環境
+
+### 前提条件
+
+-   Node.js v18.20.5以上
+-   npm
+-   MongoDB (ローカル開発用)
+
+### 動作確認済み環境
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+% node -v
+v18.20.5
+
+% npm -v
+10.8.2
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 開発の始め方
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. 開発サーバーを起動:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    ```bash
+    npm run dev
+    ```
 
-## Learn More
+2. ブラウザで [http://localhost:3000](http://localhost:3000) を開いて結果を確認
 
-To learn more about Next.js, take a look at the following resources:
+3. `app/page.tsx` を編集することでページを編集可能。ファイルを編集すると、ページは自動的に更新される。
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 デプロイ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 自動デプロイ
 
-## Deploy on Vercel
+-   **mainブランチ**: Production環境に自動デプロイ
+    -   デプロイ先: https://dot-assembly.vercel.app/
+-   **developブランチ**: Preview環境に自動デプロイ
+    -   プレビューURLは各デプロイ時に生成
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 関連リンク
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-   [MongoDB Atlas](https://cloud.mongodb.com/v2#/org/66d322901c627467746e4d47/projects)
+-   [Vercel Dashboard](https://vercel.com/hechimas-projects/dot-assembly/deployments)
