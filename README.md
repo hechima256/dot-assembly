@@ -51,11 +51,16 @@ npm run dev
 
 このプロジェクトでは、[`next/font`](https://nextjs.org/docs/basic-features/font-optimization) を使用して、カスタムGoogleフォントのInterを自動的に最適化して読み込んでいます。
 
-## デプロイ方法
+## デプロイ
 
-main, developブランチをpushすることでVercelに自動デプロイされる。
-mainはProduction, developはPreview環境にデプロイされる
+### 自動デプロイ
 
-https://cloud.mongodb.com/v2#/org/66d322901c627467746e4d47/projects
+-   **mainブランチ**: Production環境に自動デプロイ
+    -   デプロイ先: https://dot-assembly.vercel.app/
+-   **developブランチ**: Preview環境に自動デプロイ
+    -   プレビューURLは各デプロイ時に生成
 
-https://vercel.com/hechimas-projects/dot-assembly/deployments
+### 関連リンク
+
+-   [MongoDB Atlas](https://cloud.mongodb.com/v2#/org/66d322901c627467746e4d47/projects)
+-   [Vercel Dashboard](https://vercel.com/hechimas-projects/dot-assembly/deployments)
