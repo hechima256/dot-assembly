@@ -1,7 +1,24 @@
-共同ピクセルお絵描き。r/placeの再現を目指している。まだ1ピクセル(画面全体)しかできていない。Next(Vercel)+MongoDB
+# Dot Assembly 🎨
 
-公開先
-https://dot-assembly.vercel.app/
+共同でピクセルアートを作成できるWebアプリケーション。Redditのr/placeのような共同アートを目指しています。
+
+## 🌟 特徴
+
+-   画面全体を1つのピクセルとして編集可能
+-   最終更新日時の表示
+-   シンプルなUI
+
+## 🚀 デモ
+
+現在のバージョン: https://dot-assembly.vercel.app/
+
+## 🛠 技術スタック
+
+-   **フレームワーク**: Next.js 14 (App Router)
+    -   Route Handlers（APIエンドポイント）
+    -   クライアントコンポーネント（インタラクティブなUI要素）
+-   **データベース**: MongoDB
+-   **その他**: TypeScript, Tailwind CSS
 
 ## 開発の前提条件
 
